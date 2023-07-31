@@ -34,7 +34,7 @@ def main():
         X = mod.modulate(bits)
 
         # AWGN通信路
-        Z = np.random.normal(0.0, sigma_noise, size=[M, K])
+        Z = np.random.normal(0.0, sigma_noise, size=[M, K]) + 1j * np.random.normal(0.0, sigma_noise, size=[M, K])
         Y = X + Z
 
         # 復調
