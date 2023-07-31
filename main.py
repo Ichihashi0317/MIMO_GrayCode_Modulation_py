@@ -18,7 +18,7 @@ def main():
     N0 = M / SNR
     sigma_noise = math.sqrt(N0 / 2.0)
     
-    # 変調器インスタンス生成
+    # 変復調器インスタンス生成
     mod = Modulator(Q_ant)
 
     # ビットエラー数
