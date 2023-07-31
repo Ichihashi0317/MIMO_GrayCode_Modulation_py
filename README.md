@@ -1,14 +1,13 @@
 # MIMO_gray_modulation_py
 Python用の変復調プログラム
-- BPSK, QPSK, QAM対応（すべてグレイ符号）
+- BPSK，QPSK，QAM対応（すべてグレイ符号）
 - 複素モデル，実数等価モデルどちらでも出力可能
-### MIMO_modulatorとMassiveMIMO_modulatorの違い
-- MIMO_modulatorの方が高速だが，アンテナ本数が増えるとメモリ使用量が急増するため，小規模MIMO向け
-- MassiveMIMO_modulatorは，インスタンスのメモリ使用量アンテナ本数に依存せず，大規模MIMOに対応可能
-- MIMO_modulatorで使用できるアンテナ本数の目安は以下の通り（PCに依存）<br>
-  これを超える場合はMassiveMIMO_modulatorを使用すること
-  - BPSK : 23本以下
-  - QPSK : 12本以下
-  - 16QAM : 6本以下
-  - 64QAM : 4本以下<br>
-  ※256QAM以上でも対応可能
+
+## 使い方
+- インスタンス生成時に，変調多値数，複素or実数等価を引数として指定
+- 変調メソッドは，ビットを入力すると，送信行列が出力される
+- 復調メソッドは，受信行列を入力すると，硬判定してビットが出力される
+
+  #### インスタンス生成時の引数
+  - Q_ant (int) - 1アンテナあたりの多値数． $2$ または $4^n$ ($n$は自然数) で指定．
+  - real_eq (bool) - Falseの場合，複素モデルを扱う．Trueの場合，実数等価モデルを扱う．規定値はFalse．
