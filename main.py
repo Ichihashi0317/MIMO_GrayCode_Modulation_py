@@ -1,6 +1,6 @@
 import math
 import numpy as np
-from mimo_gray_modulation import Modulator
+from modulator import Modulator
 
 def main():
     # パラメータ設定
