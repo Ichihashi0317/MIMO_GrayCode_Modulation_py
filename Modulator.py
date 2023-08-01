@@ -14,7 +14,7 @@ class Modulator():
             # データラベル -> シンボル 変換用 変数
             label_dim = np.arange(Q_dim, dtype=float)
             self.mean = label_dim.mean()
-            self.k_demod = np.sqrt( 2*np.mean((label_dim - self.mean)**2) ) # シンボル間隔を1にするための係数
+            self.k_demod = np.sqrt(2 * np.mean((label_dim - self.mean) ** 2))   # シンボル間隔を1にするための係数
             self.k_mod = 1 / self.k_demod   # 1次元あたりの電力を1/2にするための係数
         ## QAMのとき
         elif Q_ant > 4:
@@ -24,11 +24,11 @@ class Modulator():
             self.q_dim = q_dim
             self.q_ant = q_dim * 2          # 1アンテナあたりのビット長
             # ビット列 -> データラベル 変換用 重みベクトル
-            self.weight = 2**np.arange(q_dim)
+            self.weight = 2 ** np.arange(q_dim)
             # データラベル -> シンボル 変換用 配列
             label_dim = np.arange(Q_dim)
             self.mean = label_dim.mean()
-            self.k_demod = np.sqrt( 2*np.mean((label_dim - self.mean)**2) ) # シンボル間隔を1にするための係数
+            self.k_demod = np.sqrt(2 * np.mean((label_dim - self.mean) ** 2))   # シンボル間隔を1にするための係数
             k_mod = 1 / self.k_demod        # 1次元あたりの電力を1/2にするための係数
             self.symtab_dim = (self.gray2binary(label_dim) - self.mean) * k_mod
             # シンボル位置ラベル -> ビット列 変換用 配列
