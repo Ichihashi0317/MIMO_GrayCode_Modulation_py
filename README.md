@@ -1,4 +1,4 @@
-# MIMO_gray_modulation_py
+# MIMO_GrayCode_Modulation_py
 Python用の変復調プログラム
 - BPSK，QPSK，QAM対応（すべてグレイ符号）
 - 複素モデル，実数等価モデルどちらでも出力可能
