@@ -38,6 +38,7 @@ class Modulator():
                 bittab_dim[i, :] = tmp % 2
                 tmp //= 2
             self.bittab_dim_ = bittab_dim[:, self.binary2gray(label_dim)]
+            #（binary符号が1増減すると，それに対応するgray符号は1bitだけ変化する．シンボル位置が1つ変化したときにデータは1bitだけの変化にしたいから，シンボル位置をbinary符号，データラベルをgray符号に対応させる．）
     
     ### 変調メソッド
     # 入力：送信ビットの2次元配列
