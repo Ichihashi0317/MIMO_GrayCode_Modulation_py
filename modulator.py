@@ -5,10 +5,10 @@ class Modulator():
     ## 引数 ##
     # Q_ant: 1アンテナあたりの多値数（2または4の累乗）
     # real_eq: Falseなら複素モデル，Trueなら実数等価モデルを扱える
-    def __init__(self, Q_ant, M=1, real_eq=False):
+    def __init__(self, Q_ant, M=1, complex=True):
         self.Q_ant = Q_ant
         self.M = M
-        self.complex = not real_eq
+        self.complex = complex
         ## QPSKのとき
         if Q_ant == 4:
             Q_dim = int(math.sqrt(Q_ant))   # 1次元あたりの多値数

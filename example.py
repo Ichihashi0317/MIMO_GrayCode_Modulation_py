@@ -5,7 +5,7 @@ from modulator import Modulator
 def main():
     # パラメータ設定
     M = 16          # アンテナ本数
-    Q = 64      # 1アンテナあたりの多値数
+    Q = 64          # 1アンテナあたりの多値数
     SNR_dB = 30     # SNR [dB]
     K = 1024        # シンボル長
     nloops = 100    # ループ数
