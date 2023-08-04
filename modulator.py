@@ -4,7 +4,8 @@ import numpy as np
 class Modulator():
     ## 引数 ##
     # Q_ant: 1アンテナあたりの多値数（2または4の累乗）
-    # real_eq: Falseなら複素モデル，Trueなら実数等価モデルを扱える
+    # M: 送信アンテナ本数
+    # complex: Trueなら複素モデル，Falseなら実数等価モデルを扱える
     def __init__(self, Q_ant, M=1, complex=True):
         self.Q_ant = Q_ant
         self.M = M
