@@ -5,8 +5,9 @@ class Modulator():
     ## 引数 ##
     # Q_ant: 1アンテナあたりの多値数（2または4の累乗）
     # real_eq: Falseなら複素モデル，Trueなら実数等価モデルを扱える
-    def __init__(self, Q_ant, real_eq=False):
+    def __init__(self, Q_ant, M=1, real_eq=False):
         self.Q_ant = Q_ant
+        self.M = M
         self.complex = not real_eq
         ## QPSKのとき
         if Q_ant == 4:
@@ -23,6 +24,7 @@ class Modulator():
             q_dim = int(math.log2(Q_dim))   # 1次元あたりのビット長
             self.q_dim = q_dim
             self.q_ant = q_dim * 2          # 1アンテナあたりのビット長
+            self.q_all = M * self.q_ant     # アンテナ全体のビット長
             # ビット列 -> データラベル 変換用 重みベクトル
             self.weight = 2 ** np.arange(q_dim)
             # データラベル -> シンボル 変換用 配列
@@ -52,20 +54,19 @@ class Modulator():
             if self.complex:
                 syms = syms.astype(complex)
             else:
-                M, K = syms.shape
-                syms = np.concatenate([syms, np.zeros([M, K])], axis=0) # zerosが実数型だから，symsは実数型として出力される
+                K = syms.shape[1]
+                syms = np.concatenate([syms, np.zeros([self.M, K])], axis=0) # zerosが実数型だから，symsは実数型として出力される
         ### QPSK
         elif self.Q_ant == 4:
             # シンボル生成
             syms = (bits - self.mean) * self.k_mod
             # 複素モデル
             if self.complex:
-                M = syms.shape[0] // 2
-                syms = syms[:M, :] + 1j * syms[M:, :]
+                syms = syms[:self.M, :] + 1j * syms[self.M:, :]
         ### QAM
         else:
             # 変数取り込み
-            M = bits.shape[0] // self.q_ant
+            M = self.M
             K = bits.shape[1]
             # ビット列 -> 各次元のデータラベル
             labels_dim = self.weight @ bits.reshape(2*M, self.q_dim, K) # (2*M, K) = (q_dim,) @ (2*M*q_dim, K).reshape(2*M, q_dim, K)
@@ -87,8 +88,7 @@ class Modulator():
                 if self.complex:
                     syms = syms.real
                 else:
-                    M = syms.shape[0] // 2
-                    syms = syms[:M]
+                    syms = syms[:self.M]
             # QPSKなら実数等価
             elif self.complex:
                 syms = np.concatenate([syms.real, syms.imag], axis=0)
@@ -100,12 +100,11 @@ class Modulator():
             if self.complex:
                 syms = np.concatenate([syms.real, syms.imag], axis=0)
             # 変数取り込み
-            M = syms.shape[0] // 2
             K = syms.shape[1]
             # 規格化・整数化（整数間隔になるように係数をかけて，0以上になるように定数を足して，整数に丸める）
             syms_ = np.around(syms * self.k_demod + self.mean).astype(int).clip(0, self.Q_dim - 1)
             # bit計算
-            bits = self.bittab_dim_[:, syms_].transpose(1, 0, 2).reshape(2*M*self.q_dim, K) # (2*M*q_dim, K) = (q_dim, 2*M, K).transpose(0 <-> 1).reshape(2*M*q_dim, K), (q_dim, 2*M, K) = (q_dim, Q_dim)[:, (2*M, K)]
+            bits = self.bittab_dim_[:, syms_].transpose(1, 0, 2).reshape(self.q_all, K) # (q_all, K) = (q_dim, 2*M, K).transpose(0 <-> 1).reshape(q_all, K), (q_dim, 2*M, K) = (q_dim, Q_dim)[:, (2*M, K)]
         return bits
     
     @staticmethod

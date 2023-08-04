@@ -19,7 +19,7 @@ def main():
     sigma_noise = math.sqrt(N0 / 2.0)
     
     # 変復調器インスタンス生成
-    mod = Modulator(Q_ant)
+    mod = Modulator(Q_ant, M)
 
     # ビットエラー数
     BE = 0
