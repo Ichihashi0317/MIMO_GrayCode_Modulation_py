@@ -97,14 +97,14 @@ class Modulator():
                     M = syms.shape[0] // 2
                     syms = syms[:M]
             elif self.complex:
-                # QPSKなら実数等価
+                # 実数等価になおす
                 syms = np.concatenate([syms.real, syms.imag], axis=0)
             # bit計算
             bits = (syms > 0.0).astype(int)
         else:
             # QAM
             if self.complex:
-                # 実数等価
+                # 実数等価になおす
                 syms = np.concatenate([syms.real, syms.imag], axis=0)
             # 変数取り込み
             M = syms.shape[0] // 2
