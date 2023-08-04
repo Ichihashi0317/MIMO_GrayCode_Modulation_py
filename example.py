@@ -6,7 +6,7 @@ def main():
     # パラメータ設定
     M = 16          # アンテナ本数
     Q = 64          # 1アンテナあたりの多値数
-    SNR_dB = 30     # SNR [dB]
+    SNR_dB = 20     # SNR [dB]
     K = 1024        # シンボル長
     nloops = 100    # ループ数
 
@@ -15,7 +15,7 @@ def main():
 
     # 雑音レベル計算
     SNR = 10.0 ** (SNR_dB / 10.0)
-    N0 = M / SNR
+    N0 = 1.0 / SNR
     sigma_noise = math.sqrt(N0 / 2.0)
     
     # 変復調器インスタンス生成
@@ -44,7 +44,7 @@ def main():
         BE += (bits != bits_hat).sum()
     
     # ビット誤り率計算
-    BER = BE / nloops / K / q
+    BER = BE / (nloops * K * q)
 
     # 結果表示
     print('BER = ', BER)
