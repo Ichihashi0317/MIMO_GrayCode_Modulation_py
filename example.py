@@ -2,6 +2,7 @@ import math
 import numpy as np
 from modulator import Modulator
 
+
 def main():
     # パラメータ設定
     M = 16          # アンテナ本数
@@ -10,16 +11,13 @@ def main():
     K = 1024        # シンボル長
     nloops = 100    # ループ数
 
-    # 1送信ベクトルあたりのビット長
-    q = int(math.log2(Q_ant)) * M
-
     # 雑音レベル計算
     SNR = 10.0 ** (SNR_dB / 10.0)
     N0 = M / SNR
     sigma_noise = math.sqrt(N0 / 2.0)
-    
+
     # 変復調器インスタンス生成
-    mod = Modulator(Q_ant)
+    mod = Modulator(Q_ant, M, K)
 
     # ビットエラー数
     BE = 0
@@ -28,7 +26,7 @@ def main():
     for _ in range(nloops):
 
         # 送信ビット生成
-        bits = np.random.randint(2, size=[q, K])
+        bits = mod.make_bits()
 
         # 変調
         X = mod.modulate(bits)
@@ -42,12 +40,13 @@ def main():
 
         # ビットエラー数計算
         BE += (bits != bits_hat).sum()
-    
+
     # ビット誤り率計算
-    BER = BE / nloops / K / q
+    BER = BE / nloops / K / mod.q
 
     # 結果表示
     print('BER = ', BER)
+
 
 if __name__ == '__main__':
     main()
