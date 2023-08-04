@@ -5,13 +5,13 @@ from modulator import Modulator
 def main():
     # パラメータ設定
     M = 16          # アンテナ本数
-    Q_ant = 64      # 1アンテナあたりの多値数
+    Q = 64      # 1アンテナあたりの多値数
     SNR_dB = 30     # SNR [dB]
     K = 1024        # シンボル長
     nloops = 100    # ループ数
 
     # 1送信ベクトルあたりのビット長
-    q = int(math.log2(Q_ant)) * M
+    q = int(math.log2(Q)) * M
 
     # 雑音レベル計算
     SNR = 10.0 ** (SNR_dB / 10.0)
@@ -19,7 +19,7 @@ def main():
     sigma_noise = math.sqrt(N0 / 2.0)
     
     # 変復調器インスタンス生成
-    mod = Modulator(Q_ant, M)
+    mod = Modulator(Q, M)
 
     # ビットエラー数
     BE = 0
