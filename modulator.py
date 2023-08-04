@@ -5,10 +5,10 @@ import numpy as np
 class Modulator():
     ## 引数 ##
     # Q_ant: 1アンテナあたりの多値数（2または4の累乗）
-    # real_eq: Falseなら複素モデル，Trueなら実数等価モデルを扱える
-    def __init__(self, Q_ant, M, K, real_eq=False):
+    # complex: Falseなら実数等価モデル，Trueなら複素モデルを扱える
+    def __init__(self, Q_ant, M, K, complex=True):
         self.Q_ant = Q_ant
-        self.complex = not real_eq
+        self.complex = complex
         self.q = int(math.log2(Q_ant)) * M
         self.K = K
         # QPSKのとき
