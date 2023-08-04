@@ -42,7 +42,7 @@ def main():
         BE += (bits != bits_hat).sum()
 
     # ビット誤り率計算
-    BER = BE / nloops / K / mod.q
+    BER = BE / (nloops * K * mod.q)
 
     # 結果表示
     print('BER = ', BER)
