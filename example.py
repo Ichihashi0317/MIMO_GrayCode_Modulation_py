@@ -10,16 +10,13 @@ def main():
     K = 1024        # シンボル長
     nloops = 100    # ループ数
 
-    # 1送信ベクトルあたりのビット長
-    q = int(math.log2(Q)) * M
-
     # 雑音レベル計算
     SNR = 10.0 ** (SNR_dB / 10.0)
     N0 = 1.0 / SNR  # アンテナ間で干渉がない場合
     sigma_noise = math.sqrt(N0 / 2.0)
     
     # 変復調器インスタンス生成
-    mod = Modulator(Q, M)
+    mod = Modulator(Q)
 
     # ビットエラー数
     BE = 0
@@ -28,7 +25,7 @@ def main():
     for _ in range(nloops):
 
         # 送信ビット生成
-        bits = np.random.randint(2, size=[q, K])
+        bits = mod.gen_bits(M, K)
 
         # 変調
         X = mod.modulate(bits)
@@ -44,7 +41,7 @@ def main():
         BE += (bits != bits_hat).sum()
     
     # ビット誤り率計算
-    BER = BE / (nloops * K * q)
+    BER = BE / (nloops * K * M * math.log2(Q))
 
     # 結果表示
     print('BER = ', BER)
