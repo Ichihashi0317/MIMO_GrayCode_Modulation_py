@@ -25,7 +25,7 @@ def main():
     # テストループ
     for _ in range(nloops):
 
-        # 送信ビット生成
+        # 送信ビット列生成
         bits = mod.gen_bits(M, K)
 
         # 変調
