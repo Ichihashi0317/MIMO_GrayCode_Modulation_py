@@ -2,6 +2,7 @@ import math
 import numpy as np
 from modulator import Modulator
 
+
 def main():
     # パラメータ設定
     M = 16          # アンテナ本数
@@ -45,6 +46,7 @@ def main():
 
     # 結果表示
     print('BER = ', BER)
+
 
 if __name__ == '__main__':
     main()
