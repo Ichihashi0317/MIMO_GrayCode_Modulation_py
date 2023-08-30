@@ -113,7 +113,7 @@ class Modulator():
             syms_ = np.around(syms * self.k_demod + self.mean).astype(int).clip(0, self.Q_dim - 1)
             # bit計算
             # (q_all, K) = (q_dim, 2*M, K).transpose(0 <-> 1).reshape(q_all, K), (q_dim, 2*M, K) = (q_dim, Q_dim)[:, (2*M, K)]
-            bits = self.bittab_dim_[:, syms_].reshape(2*M*self.q_dim, K, order='F')
+            bits = self.bittab_dim_[:, syms_].transpose(1, 0, 2).reshape(2*M*self.q_dim, K)
         return bits
     
     @staticmethod
