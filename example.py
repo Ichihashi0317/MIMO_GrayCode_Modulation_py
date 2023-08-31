@@ -12,7 +12,8 @@ def main():
     nloops = 100    # ループ数
     
     # 変復調器インスタンス生成
-    mod = Modulator(Q)
+    mod = Modulator(Q)  # 複素モデル
+    # mod = Modulator(Q, complex=False)   # 実数等価モデル
 
     # 雑音レベル計算
     SNR = 10.0 ** (SNR_dB / 10.0)
@@ -30,7 +31,8 @@ def main():
         X = mod.modulate(bits)
 
         # AWGN通信路
-        Z = np.random.normal(0.0, sigma_noise, size=[M, K]) + 1j * np.random.normal(0.0, sigma_noise, size=[M, K])
+        Z = np.random.normal(0.0, sigma_noise, size=[M, K]) + 1j * np.random.normal(0.0, sigma_noise, size=[M, K])  # 複素モデル
+        # Z = np.random.normal(0.0, sigma_noise, size=[2*M, K])   # 実数等価モデル
         Y = X + Z
 
         # 復調
