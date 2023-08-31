@@ -10,19 +10,17 @@ def main():
     K = 1024        # シンボル長
     SNR_dB = 20     # SNR [dB]
     nloops = 100    # ループ数
+    
+    # 変復調器インスタンス生成
+    mod = Modulator(Q)
 
     # 雑音レベル計算
     SNR = 10.0 ** (SNR_dB / 10.0)
     N0 = 1.0 / SNR  # アンテナ間で干渉がない場合
     sigma_noise = math.sqrt(N0 / 2.0)
     
-    # 変復調器インスタンス生成
-    mod = Modulator(Q)
-
-    # ビットエラー数
-    BE = 0
-
     # テストループ
+    BE = 0
     for _ in range(nloops):
 
         # 送信ビット列生成
