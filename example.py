@@ -45,7 +45,7 @@ def main():
     BER = BE / (nloops * K * M * math.log2(Q))
 
     # 結果表示
-    print('BER = ', BER)
+    print('BER =', BER)
 
 
 if __name__ == '__main__':
