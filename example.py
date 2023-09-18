@@ -1,51 +1,51 @@
 import math
 import numpy as np
-from MIMO_GrayCode_Modulation_py.modulator import Modulator
+import MIMO_GrayCode_Modulation as mgm
 
 
 def main():
-    # パラメータ設定
-    M = 16  # アンテナ本数
-    Q = 64  # 1アンテナあたりの多値数
-    K = 1024  # シンボル長
+    # Setup parameters
+    M = 16  # Number of antennas
+    Q = 64  # Multivalues per antenna
+    K = 1024  # Symbol length
     SNR_dB = 20  # SNR [dB]
-    nloops = 100  # ループ数
+    nloops = 100  # Number of loops
 
-    # 変復調器インスタンス生成
-    mod = Modulator(Q)  # 複素モデル
-    # mod = Modulator(Q, complex=False)   # 実数等価モデル
+    # Create modulator instance
+    mod = mgm.Modulator(Q)  # Complex model
+    # mod = mgm.Modulator(Q, complex=False)   # Real number equivalent model
 
-    # 雑音レベル計算
+    # Calculate noise level
     SNR = 10.0 ** (SNR_dB / 10.0)
-    N0 = 1.0 / SNR  # アンテナ間で干渉がない場合
+    N0 = 1.0 / SNR  # In case of no interference between antennas
     sigma_noise = math.sqrt(N0 / 2.0)
 
-    # テストループ
+    # Test loop
     BE = 0
     for _ in range(nloops):
-        # 送信ビット列生成
+        # Generate transmitted bit sequence
         bits = mod.gen_bits(M, K)
 
-        # 変調
+        # Modulate
         X = mod.modulate(bits)
 
-        # AWGN通信路
+        # AWGN channel
         Z = np.random.normal(0.0, sigma_noise, size=[M, K]) + 1j * np.random.normal(
             0.0, sigma_noise, size=[M, K]
-        )  # 複素モデル
-        # Z = np.random.normal(0.0, sigma_noise, size=[2*M, K])   # 実数等価モデル
+        )  # Complex model
+        # Z = np.random.normal(0.0, sigma_noise, size=[2*M, K])   # Real number equivalent model
         Y = X + Z
 
-        # 復調
+        # Demodulate
         bits_hat = mod.demodulate(Y)
 
-        # ビットエラー数計算
+        # Calculate number of bit errors
         BE += (bits != bits_hat).sum()
 
-    # ビット誤り率計算
+    # Calculate bit error rate
     BER = BE / (nloops * K * M * math.log2(Q))
 
-    # 結果表示
+    # Display results
     print("BER =", BER)
 
 
