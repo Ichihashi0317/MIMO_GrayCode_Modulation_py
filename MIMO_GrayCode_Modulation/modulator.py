@@ -58,7 +58,7 @@ class Modulator:
 
         Parameters:
         - M (int): Number of transmitting antennas.
-        - K (int): Length of symbols.
+        - K (int): Symbol length.
 
         Returns:
         - ndarray: Transmit bit 2D array.

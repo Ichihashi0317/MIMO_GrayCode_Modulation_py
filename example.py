@@ -5,8 +5,8 @@ import MIMO_GrayCode_Modulation as mgm
 
 def main():
     # Setup parameters
-    M = 16  # Number of antennas
-    Q = 64  # Multivalues per antenna
+    M = 16  # Number of transmitting and receiving antennas
+    Q = 64  # Modulation level per antenna
     K = 1024  # Symbol length
     SNR_dB = 20  # SNR [dB]
     nloops = 100  # Number of loops
