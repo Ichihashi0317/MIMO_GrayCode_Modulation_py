@@ -50,7 +50,6 @@ class Modulator:
                 tmp //= 2
             self.bittab_dim_ = bittab_dim[:, self._binary2gray(label_dim)]
             # When the binary code increases or decreases by one, the corresponding gray code changes by one bit. Since we want the data to change by only one bit when the symbol position changes by one, we map the symbol position to the binary code and the data label to the gray code.
-            # binary符号が1増減すると，それに対応するgray符号は1bitだけ変化する．シンボル位置が1つ変化したときにデータは1bitだけの変化にしたいから，シンボル位置をbinary符号，データラベルをgray符号に対応させる．
 
     def gen_bits(self, M, K):
         """
@@ -142,7 +141,6 @@ class Modulator:
             M = syms.shape[0] // 2
             K = syms.shape[1]
             # Normalization/integer (multiply by a factor to obtain an integer interval, add a constant so that it is greater than or equal to zero, and round to the nearest integer)
-            # 規格化・整数化（整数間隔になるように係数をかけて，0以上になるように定数を足して，整数に丸める）
             syms_ = (
                 np.around(syms * self.k_demod + self.mean)
                 .astype(int)
