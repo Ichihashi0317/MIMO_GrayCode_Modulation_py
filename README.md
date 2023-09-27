@@ -3,7 +3,7 @@ Python用の変復調プログラム
 - BPSK，QPSK，QAM対応（すべてグレイ符号）
 - 複素モデル，実数等価モデルどちらにも対応
 
-# インストール方法
+## インストール方法
 ```
 pip install git+https://github.com/Ichihashi0317/MIMO_GrayCode_Modulation_py.git
 ```
