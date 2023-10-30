@@ -30,8 +30,7 @@ def main():
         X = mod.modulate(bits)
 
         # AWGN channel
-        Z = np.random.normal(0.0, sigma_noise, size=[M, K])
-        +1j * np.random.normal(0.0, sigma_noise, size=[M, K])  # Complex model
+        Z = np.random.normal(0.0, sigma_noise, size=[M, K]) + 1j * np.random.normal(0.0, sigma_noise, size=[M, K])  # Complex model
         # Z = np.random.normal(0.0, sigma_noise, size=[2*M, K])   # Real number equivalent model
         Y = X + Z
 
