@@ -49,6 +49,7 @@ pip install git+https://github.com/Ichihashi0317/MIMO_GrayCode_Modulation_py.git
   入力：
   - syms (ndarray) - 受信行列．サイズは送信行列と同じ．
 
+
   出力：
   - bits (ndarray) - 受信ビットの2次元配列．各アンテナの実部・虚部単位で硬判定される．サイズは送信ビットの配列と同じ．
 
