@@ -9,7 +9,7 @@ def main():
     Q = 64  # Modulation level per antenna
     K = 1024  # Symbol length
     SNR_dB = 20  # SNR [dB]
-    nloops = 10000  # Number of loops
+    nloops = 100  # Number of loops
 
     # Create modulator instance
     mod = mgm.Modulator(Q)  # Complex model
