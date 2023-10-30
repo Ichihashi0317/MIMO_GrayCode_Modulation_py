@@ -30,6 +30,8 @@ pip install git+https://github.com/Ichihashi0317/MIMO_GrayCode_Modulation_py.git
   出力：
   - bits (ndarray) - 変調メソッド入力に合わせたサイズのビット列．乱数で生成される．
   
+  [^1]
+  
   ### 変調メソッド
   ```
   syms = mod.modulate(bits)
