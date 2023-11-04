@@ -138,7 +138,7 @@ class Modulator:
             M = syms.shape[0] // 2
             K = syms.shape[1]
             # Normalization/integer (multiply by a factor to obtain an integer interval, add a constant so that it is greater than or equal to zero, and round to the nearest integer)
-            syms_ = np.around(syms * self.k_demod + self.mean).astype(int).clip(0, self.Q_dim - 1)
+            syms_ = (syms * self.k_demod + self.mean).round().astype(int).clip(0, self.Q_dim - 1)
             # Calculate bit
             bits = self.bittab_dim_[:, syms_].transpose(1, 0, 2).reshape(2 * M * self.q_dim, K)
         return bits
