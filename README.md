@@ -12,7 +12,7 @@ pip install git+https://github.com/Ichihashi0317/MIMO_GrayCode_Modulation_py.git
 
   ### インスタンス生成時の引数
   ```
-  import MIMO_GrayCode_Modulation_py as mgm
+  import MIMO_GrayCode_Modulation as mgm
   Q_ant = 2 # 2: BPSK, 4: QPSK, 16: 16QAM, 64: 64QAM ...
   mod = mgm.Modulator(Q_ant)
   ```
