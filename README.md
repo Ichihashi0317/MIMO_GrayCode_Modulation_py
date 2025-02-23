@@ -39,10 +39,10 @@ pip install git+https://github.com/Ichihashi0317/MIMO_GrayCode_Modulation_py.git
   syms = mod.modulate(bits)
   ```
   入力：
-  - bits (ndarray) - 送信ビットの2次元配列．1送信ベクトルに対応するビット列を列ベクトルとして含み，それを行方向へ並べた行列．1送信ベクトルあたりのビット数を $q = M \log_2{Q_\mathrm{ant}}$ とすると，サイズは $(q \times K)$．
+  - bits (ndarray) - 送信ビットの2次元配列．1送信ベクトルに対応するビット列を列ベクトルとして含み，それを行方向へ並べた行列．1送信ベクトルあたりのビット長を $q = M \log_2{Q_\mathrm{ant}}$ とすると，サイズは $(q \times K)$．
 
   出力：
-  - syms (ndarray) - 送信行列．送信ベクトルを列ベクトルとして含む．サイズは，複素モデルの場合は $(M \times K)$，実数等価モデルの場合は $(2M \times K)$．シンボルマッピングは平均電力が1に規格化される．
+  - syms (ndarray) - 送信行列．送信ベクトルを列ベクトルとして含む．サイズは，複素モデルの場合は $(M \times K)$，実数等価モデルの場合は $(2M \times K)$．シンボルマッピングは平均電力が1になるように規格化される．
 
   ### 復調メソッド
   ```
