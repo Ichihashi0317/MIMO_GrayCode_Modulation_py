@@ -8,7 +8,7 @@ Python用の変復調プログラム
 pip install git+https://github.com/Ichihashi0317/MIMO_GrayCode_Modulation_py.git
 ```
 ※ 変調プログラムのソースコードは，フォルダ"MIMO_GrayCode_Modulation"の中の"modulator.py"にある．<br>
-　 単純にこのコードを自分のプログラムに貼り付けて使うこともできる．
+　 このコードをそのまま自身のプログラムに貼り付けて使うこともできる．
 
 ## 使い方
 
