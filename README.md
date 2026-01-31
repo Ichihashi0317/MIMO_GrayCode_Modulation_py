@@ -1,58 +1,81 @@
-# MIMO_GrayCode_Modulation_py
+# MIMO Gray-Code Modulation (Python)
+
 Python用の変復調プログラム
+
 - BPSK，QPSK，QAM対応（すべてグレイ符号）
 - 複素モデル，実数等価モデルどちらにも対応
 
+## 依存関係
+
+- Python 3.10+（動作確認: Python 3.13.5）
+- Numpy
+
 ## インストール方法
-```
+
+```bash
 pip install git+https://github.com/Ichihashi0317/MIMO_GrayCode_Modulation_py.git
 ```
-※ 変調プログラムのソースコードは，フォルダ"MIMO_GrayCode_Modulation"の中の"modulator.py"にある．<br>
-　 このコードをそのまま自身のプログラムに貼り付けて使うこともできる．
+
+補足:
+
+- [ソースコード](MIMO_GrayCode_Modulation/modulator.py)をそのまま自分のプロジェクトへコピーして使うこともできる．
 
 ## 使い方
 
-  ### インスタンス生成時の引数
-  ```
-  import MIMO_GrayCode_Modulation as mgm
-  Q_ant = 2 # 2: BPSK, 4: QPSK, 16: 16QAM, 64: 64QAM ...
-  mod = mgm.Modulator(Q_ant)
-  ```
-  - Q_ant (int) - 1アンテナあたりの多値数． $2$ または $4^n$ ($n$は任意の自然数) で指定．
-  - complex (bool) - Trueの場合は複素モデルを扱う．Falseの場合は実数等価モデルを扱う．規定値はTrue．
-  
-  ### ビット列生成メソッド
-  ```
-  bits = mod.gen_bits(M, K)
-  ```
-  入力：
-  - M (int) - アンテナ本数．任意の自然数で指定．
-  - K (int) - 1フレーム中の送信ベクトル数．任意の自然数で指定．
-  
-  出力：
-  - bits (ndarray) - 変調メソッド入力に合わせたサイズのビット列．乱数で生成される．
-  
-  [^1]
-  
-  ### 変調メソッド
-  ```
-  syms = mod.modulate(bits)
-  ```
-  入力：
-  - bits (ndarray) - 送信ビットの2次元配列．1送信ベクトルに対応するビット列を列ベクトルとして含み，それを行方向へ並べた行列．1送信ベクトルあたりのビット長を $q = M \log_2{Q_\mathrm{ant}}$ とすると，サイズは $(q \times K)$．
+### インスタンス生成時の引数
 
-  出力：
-  - syms (ndarray) - 送信行列．送信ベクトルを列ベクトルとして含む．サイズは，複素モデルの場合は $(M \times K)$，実数等価モデルの場合は $(2M \times K)$．シンボルマッピングは平均電力が1になるように規格化される．
+```python
+import MIMO_GrayCode_Modulation as mgm
+Q_ant = 2 # 2: BPSK, 4: QPSK, 16: 16QAM, 64: 64QAM ...
+mod = mgm.Modulator(Q_ant, complex=True)
+```
 
-  ### 復調メソッド
-  ```
-  bits = mod.demodulate(syms)
-  ```
-  入力：
-  - syms (ndarray) - 受信行列．サイズは送信行列と同じ．
+- `Q_ant`: 1アンテナあたりの多値数． $2$ または $4^n$ ($n$は任意の自然数) で指定．
+- `complex`:
+  - `True`: 複素モデル（規定値）
+  - `False`: 実数等価モデル
 
+### ビット列生成メソッド
 
-  出力：
-  - bits (ndarray) - 受信ビットの2次元配列．各アンテナの実部・虚部単位で硬判定される．サイズは送信ビットの配列と同じ．
+```python
+bits = mod.gen_bits(M, K)
+```
 
-[^1]: 変調メソッドへ入力する送信ビット列は，必ずしもビット列生成メソッドで作る必要はなく，他の方法で作ったものでも問題ない．<br>例えば，符号化器などから出力したビット列を，サイズを整えて変調メソッドへ入力することも可能．
+入力：
+
+- `M`: アンテナ本数．任意の自然数で指定．
+- `K`: 1フレーム中の送信ベクトル数．任意の自然数で指定．
+
+出力：
+
+- `bits`: 乱数生成された，変調入力用ビット列の2次元配列[^bits-note]．`shape=(log2(Q_ant) * M, K)`．
+
+### 変調メソッド
+
+```python
+syms = mod.modulate(bits)
+```
+
+入力：
+
+- `bits`: 送信ビットの2次元配列．1送信ベクトルに対応するビット列を列ベクトルとして含む．`shape=(log2(Q_ant) * M, K)`．[^bits-note]
+
+出力：
+
+- `syms`: 送信行列．送信ベクトルを列ベクトルとして含む．`complex=True` のとき `shape=(M, K)`，`complex=False` のとき `shape=(2M, K)`．シンボルマッピングは平均電力が 1 になるように規格化される．
+
+### 復調メソッド
+
+```python
+bits = mod.demodulate(syms)
+```
+
+入力：
+
+- `syms`: 受信行列．送信行列と同じサイズ．
+
+出力：
+
+- `bits`: 受信ビットの2次元配列．各アンテナの実部・虚部単位で硬判定される．送信ビット配列と同じサイズ．
+
+[^bits-note]: `modulate()` の入力は `gen_bits()` の出力に限らず，符号化器などから出力したビット列を整形して入力しても問題ない．
