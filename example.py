@@ -1,10 +1,12 @@
 import math
-import numpy as np
+
 import MIMO_GrayCode_Modulation as mgm
+import numpy as np
 
 
 def main():
     # Setup parameters
+    complex_model = True
     M = 16  # Number of transmitting and receiving antennas
     Q = 64  # Modulation level per antenna
     K = 1024  # Symbol length
@@ -12,8 +14,7 @@ def main():
     nloops = 100  # Number of loops
 
     # Create modulator instance
-    mod = mgm.Modulator(Q)  # Complex model
-    # mod = mgm.Modulator(Q, complex=False)   # Real number equivalent model
+    mod = mgm.Modulator(Q, complex_model)
 
     # Calculate noise level
     SNR = 10.0 ** (SNR_dB / 10.0)
@@ -30,8 +31,14 @@ def main():
         X = mod.modulate(bits)
 
         # AWGN channel
-        Z = np.random.normal(0.0, sigma_noise, size=[M, K]) + 1j * np.random.normal(0.0, sigma_noise, size=[M, K])  # Complex model
-        # Z = np.random.normal(0.0, sigma_noise, size=[2*M, K])   # Real number equivalent model
+        if complex_model:
+            # Complex model
+            Z = (np.random.normal(0.0, sigma_noise, size=[M, K])
+                 + 1j * np.random.normal(0.0, sigma_noise, size=[M, K]))  # fmt: skip
+        else:
+            # Real number equivalent model
+            Z = np.random.normal(0.0, sigma_noise, size=[2 * M, K])
+
         Y = X + Z
 
         # Demodulate

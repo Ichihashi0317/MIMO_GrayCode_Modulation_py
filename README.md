@@ -62,7 +62,7 @@ syms = mod.modulate(bits)
 
 出力：
 
-- `syms`: 送信行列．送信ベクトルを列ベクトルとして含む．`complex=True` のとき `shape=(M, K)`，`complex=False` のとき `shape=(2M, K)`．シンボルマッピングは平均電力が 1 になるように規格化される．
+- `syms`: 送信行列．送信ベクトルを列ベクトルとして含む．`complex=True` のとき `shape=(M, K)`，`complex=False` のとき `shape=(2M, K)`．シンボルマッピングは平均電力が 1 になるように正規化される．
 
 ### 復調メソッド
 
