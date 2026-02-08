@@ -18,7 +18,7 @@ pip install git+https://github.com/Ichihashi0317/MIMO_GrayCode_Modulation_py.git
 
 補足:
 
-- [ソースコード](MIMO_GrayCode_Modulation/modulator.py)をそのまま自分のプロジェクトへコピーして使うこともできる．
+- [ソースコード](MIMO_GrayCode_Modulation/modulator.py)をそのまま自分のプロジェクトへコピーして使うことも可能．
 
 ## 使い方
 

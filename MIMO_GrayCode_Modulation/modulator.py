@@ -129,6 +129,9 @@ class Modulator:
         The constellation is normalized so that the average power becomes 1 in the
         complex model (or 1/2 per real dimension).
         """
+        if bits.shape[0] % self._q_ant != 0:
+            raise ValueError("bits.shape[0] must be a multiple of log2(Q_ant)")
+
         if self._Q_ant == 2:
             ## BPSK
             syms = 2 * bits - 1
