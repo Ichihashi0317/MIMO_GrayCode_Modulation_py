@@ -8,7 +8,6 @@ This module provides Gray-coded modulation / demodulation utilities:
 The main entry point is :class:`Modulator`.
 """
 
-import math
 from typing import Any, TypeAlias
 
 import numpy as np
@@ -60,7 +59,8 @@ class Modulator:
             return
 
         ## QPSK / QAM
-        Q_dim = int(math.sqrt(Q_ant))
+        q_dim = self._q_ant // 2
+        Q_dim = 1 << q_dim
         label_dim = np.arange(Q_dim)
         self._mean: np.floating = label_dim.mean()
         # Scaling factors:
@@ -73,17 +73,16 @@ class Modulator:
             return
 
         ## QAM
+        self._q_dim = q_dim
         self._Q_dim = Q_dim
-        self._q_dim = q_dim = self._q_ant // 2
         self._k_demod = k_demod
-
         self._weight = 2 ** np.arange(q_dim)
         self._symtab_dim = (self._gray2binary(label_dim) - self._mean) * k_mod
         bittab_dim = np.empty([q_dim, Q_dim], dtype=int)
         tmp = np.arange(Q_dim)
         for i in range(q_dim):
-            bittab_dim[i, :] = tmp % 2
-            tmp //= 2
+            bittab_dim[i, :] = tmp & 1
+            tmp >>= 1
         self._bittab_dim_ = bittab_dim[:, self._binary2gray(label_dim)]
         # If the binary index changes by ±1, the corresponding Gray code changes by
         # exactly one bit. This is why we associate:
